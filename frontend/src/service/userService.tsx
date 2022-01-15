@@ -1,16 +1,22 @@
-import axios from 'axios';
-import { User, getUserByIdRequest, getUserByIdResponse } from "../type/user";
-import { ErrorMessage } from '../type/errorMessage'
+import axios from "axios"
+import { User, getUserByIdRequest, getUserByIdResponse } from "../type/user"
+import { ErrorMessage } from "../type/errorMessage"
+
+const routes = "/api"
 
 // GET /users/${userId}
-async function getUserById(userId: string, getUserById: getUserByIdRequest): Promise<getUserByIdResponse | ErrorMessage> {
-    return new Promise((resolve, reject) => {
-        axios.get<getUserByIdResponse>(`/users/${userId}`, {})
-            .then(res => {
-                resolve(res.data);
-            })
-            .catch(err => {
-                reject(err)
-            });
-    });
+export async function getUserById(
+  userId: string,
+  getUserById: getUserByIdRequest
+): Promise<getUserByIdResponse | ErrorMessage> {
+  return new Promise((resolve, reject) => {
+    axios
+      .get<getUserByIdResponse>(`${routes}/users/${userId}`, {})
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
 }
