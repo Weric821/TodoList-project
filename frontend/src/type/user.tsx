@@ -1,4 +1,4 @@
-export type User = {
+export interface User {
     id?: string,
     name: string,
     email: string,
@@ -7,8 +7,8 @@ export type User = {
 }
 
 // GET /users/${userId}
-export type getUserByIdRequest = {}
-export type getUserByIdResponse = {
+export interface getUserByIdRequest {}
+export interface getUserByIdResponse {
     user: User
 }
 

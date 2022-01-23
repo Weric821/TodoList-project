@@ -1,7 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg"
+import "./App.css"
+import MakeServer from "./mockServer"
+import * as faker from "faker"
 
 function App() {
+  console.log("==", faker.internet.email())
+  console.log("====",faker.address.country())
+  if (process.env.NODE_ENV === "development") {
+    MakeServer({ environment: "development" })
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,7 +27,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

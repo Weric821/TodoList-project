@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "strict": false,  //採用嚴格模式  
+    }
+}

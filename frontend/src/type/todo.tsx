@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export type Todo = {
+export interface Todo {
     id?: string
     author: User,
     title: string,
@@ -11,39 +11,39 @@ export type Todo = {
 }
 
 // GET /todos
-export type getTodoListRequest = {}
-export type getTodoListResponse = {
+export interface getTodoListRequest  {}
+export interface getTodoListResponse {
     todos: Todo[]
 }
 
 // GET /todos/${todoId}
-export type getTodoByIdRequest = {}
-export type getTodoByIdResponse = {
+export interface getTodoByIdRequest  {}
+export interface getTodoByIdResponse {
     todo: Todo
 }
 
 // POST /todos
-export type createTodoRequest = {
+export interface createTodoRequest {
     todo: Todo
 }
-export type createTodoResponse = {
+export interface createTodoResponse {
     todo: Todo
 }
 
 // PUT /todos/${todoId}
-export type updateTodoByIdRequest = {
+export interface updateTodoByIdRequest {
     title?: string,
     content?: string,
     deadline?: string,
     tags?: string[]
 }
-export type updateTodoByIdResponse = {
+export interface updateTodoByIdResponse {
     todo: Todo
 }
 
 // DELETE /todos/${todoId}
-export type deleteTodoByIdRequest = {}
-export type deleteTodoByIdResponse = {
+export interface deleteTodoByIdRequest {}
+export interface deleteTodoByIdResponse {
     todo: Todo
 }
 
