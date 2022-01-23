@@ -1,6 +1,11 @@
 {
     "compilerOptions": {
         "jsx": "react",
-        "strict": false,  //採用嚴格模式  
+        "baseUrl": "./",
+        "paths": {
+            "src/*": [
+                "./src/*"
+            ],
+        }
     }
 }
