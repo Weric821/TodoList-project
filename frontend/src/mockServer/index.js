@@ -11,7 +11,7 @@ import * as moment from "moment"
 
 export default function MakeServer({ environment = "test" } = {}) {
   return new Server({
-    serializers: {application:RestSerializer},
+    serializers: { application: RestSerializer },
     environment,
 
     models: {
@@ -26,52 +26,24 @@ export default function MakeServer({ environment = "test" } = {}) {
         info: faker.address.country(),
         createTime: moment(faker.date.past(2)).format('LLLL')
       }),
-
-      // todo: Factory.extend({
-      //   author: trait({
-      //     receiver: 'user',
-      //     user: association()
-      //   }),
-      //   title: faker.address.country(),
-      //   content: faker.address.country(),
-      //   deadline: moment(faker.date.past(2)).format('LLLL'),
-      //   tags: [faker.name.firstName() * 3],
-      //   createTime: moment(faker.date.past(2)).format('LLLL')
-      // }),
     },
 
     seeds(server) {
       let users = server.createList("user", 2)
-      console.log(users)
 
-      
-      server.create("todo", {
-        author: users[0],
-        title: faker.address.country(),
-        content: faker.address.country(),
-        deadline: moment(faker.date.past(2)).format('LLLL'),
-        tags: [faker.name.firstName() * 3],
-        createTime: moment(faker.date.past(2)).format('LLLL')
-      })
+      for (let user of users) {
+        for (let i = 0; i < Math.ceil(Math.random() * 5); i++) {
+          server.create("todo", {
+            author: user,
+            title: faker.address.country(),
+            content: faker.address.country(),
+            deadline: moment(faker.date.past(2)).format('LLLL'),
+            tags: [faker.name.firstName() * Math.ceil(Math.random() * 5)],
+            createTime: moment(faker.date.past(2)).format('LLLL')
+          })
+        }
+      }
 
-      server.create("todo", {
-        author: users[0],
-        title: faker.address.country(),
-        content: faker.address.country(),
-        deadline: moment(faker.date.past(2)).format('LLLL'),
-        tags: [faker.name.firstName() * 3],
-        createTime: moment(faker.date.past(2)).format('LLLL')
-      })
-
-      server.create("todo", {
-        author: users[1],
-        title: faker.address.country(),
-        content: faker.address.country(),
-        deadline: moment(faker.date.past(2)).format('LLLL'),
-        tags: [faker.name.firstName() * 3],
-        createTime: moment(faker.date.past(2)).format('LLLL')
-      })
-      
       console.log(server.db.dump())
     },
 
@@ -81,6 +53,8 @@ export default function MakeServer({ environment = "test" } = {}) {
       // this.get("/movies", (schema) => {
       //   return schema.movies.all()
       // })
+      
+      //TODO: routes need to setup
     },
   })
 }
