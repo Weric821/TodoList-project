@@ -1,14 +1,9 @@
-import {
-  belongsTo,
-  createServer,
-  Factory,
-  hasMany,
-  Model,
-  Response,
-} from "miragejs"
+import { belongsTo, Server, hasMany, Model, Factory, RestSerializer } from "miragejs"
 import { User } from "../type/user"
 import { Todo } from "../type/todo"
 import * as faker from "faker"
+import * as moment from "moment"
+// import { association, Factory, trait } from 'ember-cli-mirage';
 
 // import faker from 'faker'
 
@@ -31,34 +26,39 @@ class SuccessResponse extends Response {
 }
 
 export default function MakeServer({ environment = "test" } = {}) {
-  let server = createServer({
+  return new Server({
+    serializers: { application: RestSerializer },
     environment,
 
     models: {
-      user: Model.extend({ todo: hasMany() }),
-      todo: Model.extend({ user: belongsTo() }),
+      user: Model.extend(), //{ todo: hasMany() }
+      todo: Model.extend({ author: belongsTo('user') }),
     },
-    // name: string,
-    // email: string,
-    // info?: string,
-    // createTime?: string
 
     factories: {
       user: Factory.extend({
         name: faker.name.firstName() + " " + faker.name.lastName(),
         email: faker.internet.email(),
         info: faker.address.country(),
+        createTime: moment(faker.date.past(2)).format('LLLL')
       }),
     },
 
     seeds(server) {
-      server.create("user", {
-        id: "1",
-        name: "eric",
-        email: faker.internet.email(),
-      })
-      server.create("user", { name: "Interstellar", year: 2014 })
-      server.create("user", { name: "Dunkirk", year: 2017 })
+      let users = server.createList("user", 2)
+
+      for (let user of users) {
+        for (let i = 0; i < Math.ceil(Math.random() * 5); i++) {
+          server.create("todo", {
+            author: user,
+            title: faker.address.country(),
+            content: faker.address.country(),
+            deadline: moment(faker.date.past(2)).format('LLLL'),
+            tags: [faker.name.firstName() * Math.ceil(Math.random() * 5)],
+            createTime: moment(faker.date.past(2)).format('LLLL')
+          })
+        }
+      }
 
       console.log(server.db.dump())
     },
@@ -74,6 +74,4 @@ export default function MakeServer({ environment = "test" } = {}) {
       })
     },
   })
-
-  return server
 }
