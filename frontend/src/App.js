@@ -2,13 +2,29 @@ import logo from "./logo.svg"
 import "./App.css"
 import MakeServer from "./mockServer"
 import * as faker from "faker"
+import { getUserById } from "./service/userService"
+import * as E from "fp-ts/Either"
+import { useEffect } from "react"
 
 function App() {
-  console.log("==", faker.internet.email())
-  console.log("====",faker.address.country())
+
   if (process.env.NODE_ENV === "development") {
-    MakeServer({ environment: "development" })
-  }
+      MakeServer({ environment: "development" })
+    }
+
+
+  // TODO: service usage
+  useEffect(() => {
+    getUserById("1", {}).then(
+        (data) => {
+          console.log(data)
+        },
+        (error) => {
+          console.log(error)
+        }
+    )
+  },[])
+  //
 
   return (
     <div className="App">
