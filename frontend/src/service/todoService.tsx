@@ -55,9 +55,7 @@ export async function createTodo(
   return new Promise((resolve, reject) => {
     axios
       .post<createTodoResponse>(`${routes}/todos`, {
-        params: {
-          createTodo,
-        },
+          ...createTodo,
       })
       .then((res) => {
         resolve(res.data)
@@ -76,9 +74,7 @@ export async function updateTodo(
   return new Promise((resolve, reject) => {
     axios
       .put<updateTodoByIdResponse>(`${routes}/todos/${todoId}`, {
-        params: {
-          updateTodoById,
-        },
+          ...updateTodoById,
       })
       .then((res) => {
         resolve(res.data)
@@ -96,11 +92,7 @@ export async function deleteTodo(
 ): Promise<deleteTodoByIdResponse | ErrorMessage> {
   return new Promise((resolve, reject) => {
     axios
-      .delete<deleteTodoByIdResponse>(`${routes}/todos/${todoId}`, {
-        params: {
-          deleteTodoById,
-        },
-      })
+      .delete<deleteTodoByIdResponse>(`${routes}/todos/${todoId}`, {})
       .then((res) => {
         resolve(res.data)
       })
