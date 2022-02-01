@@ -1,14 +1,11 @@
 import axios from "axios"
 import {
-  getTodoListRequest,
   getTodoListResponse,
-  getTodoByIdRequest,
   getTodoByIdResponse,
   createTodoRequest,
   createTodoResponse,
   updateTodoByIdRequest,
   updateTodoByIdResponse,
-  deleteTodoByIdRequest,
   deleteTodoByIdResponse,
 } from "../type/todo"
 import { ErrorMessage } from "../type/errorMessage"
@@ -16,9 +13,7 @@ import { ErrorMessage } from "../type/errorMessage"
 const routes = "/api"
 
 // GET /todos
-export async function getTodos(
-  getTodoList: getTodoListRequest
-): Promise<getTodoListResponse | ErrorMessage> {
+export async function getTodos(): Promise<getTodoListResponse | ErrorMessage> {
   return new Promise((resolve, reject) => {
     axios
       .get<getTodoListResponse>(`${routes}/todos`, {})
@@ -33,8 +28,7 @@ export async function getTodos(
 
 // GET /todos/${todoId}
 export async function getTodoById(
-  todoId: string,
-  getTodoById: getTodoByIdRequest
+  todoId: string
 ): Promise<getTodoByIdResponse | ErrorMessage> {
   return new Promise((resolve, reject) => {
     axios
@@ -55,7 +49,7 @@ export async function createTodo(
   return new Promise((resolve, reject) => {
     axios
       .post<createTodoResponse>(`${routes}/todos`, {
-          ...createTodo,
+        ...createTodo,
       })
       .then((res) => {
         resolve(res.data)
@@ -74,7 +68,7 @@ export async function updateTodo(
   return new Promise((resolve, reject) => {
     axios
       .put<updateTodoByIdResponse>(`${routes}/todos/${todoId}`, {
-          ...updateTodoById,
+        ...updateTodoById,
       })
       .then((res) => {
         resolve(res.data)
@@ -87,8 +81,7 @@ export async function updateTodo(
 
 // DELETE /todos/${todoId}
 export async function deleteTodo(
-  todoId: string,
-  deleteTodoById: deleteTodoByIdRequest
+  todoId: string
 ): Promise<deleteTodoByIdResponse | ErrorMessage> {
   return new Promise((resolve, reject) => {
     axios

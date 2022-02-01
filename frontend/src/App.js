@@ -15,14 +15,14 @@ function App() {
       MakeServer({ environment: "development" })
     }
 
-    // getTodos({}).then(
-    //   (data) => {
-    //     console.log(data)
-    //   },
-    //   (error) => {
-    //     console.log(error)
-    //   }
-    // )
+    getTodos().then(
+      (data) => {
+        console.log(data)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }, [])
   
 

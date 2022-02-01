@@ -1,13 +1,12 @@
 import axios from "axios"
-import { User, getUserByIdRequest, getUserByIdResponse } from "../type/user"
+import { User, getUserByIdResponse } from "../type/user"
 import { ErrorMessage } from "../type/errorMessage"
 
 const routes = "/api"
 
 // GET /users/${userId}
 export async function getUserById(
-  userId: string,
-  getUserById: getUserByIdRequest
+  userId: string
 ): Promise<getUserByIdResponse | ErrorMessage> {
   return new Promise((resolve, reject) => {
     axios
@@ -20,5 +19,3 @@ export async function getUserById(
       })
   })
 }
-
-
